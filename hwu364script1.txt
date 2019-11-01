@@ -1,0 +1,55 @@
+SHOW DATABASES;
+DROP DATABASE IF EXISTS hwu364assign2db;
+CREATE DATABASE hwu364assign2db;
+USE hwu364assign2db;
+GRANT USAGE ON *.* TO 'ta'@'localhost';
+DROP USER 'ta'@'localhost';
+CREATE USER 'ta'@'localhost' IDENTIFIED BY 'cs3319';
+GRANT ALL PRIVILEGES ON hwu364assign2db.* TO 'ta'@'localhost';
+FLUSH PRIVILEGES;
+SHOW TABLES;
+
+CREATE TABLE IF NOT EXISTS doctor(
+  license_num char(4) NOT NULL,
+  first_name char(20) NOT NULL,
+  last_name char(20) NOT NULL,
+  specialty char(30),
+  date_of_licensed date,
+  unique_code char(3),
+  PRIMARY KEY(license_num)
+);
+
+CREATE TABLE IF NOT EXISTS hospital(
+  unique_code char(3) NOT NULL,
+  hospital_name char(20) NOT NULL,
+  city char(20) NOT NULL,
+  province char(2) NOT NULL,
+  num_of_beds int,
+  current_head char(4),
+  date_of_start DATE,
+  PRIMARY KEY(unique_code),
+  FOREIGN KEY (current_head) REFERENCES doctor(license_num)
+  ON DELETE CASCADE
+);
+
+
+CREATE TABLE IF NOT EXISTS patient(
+  OHIP char(9) NOT NULL,
+  first_name char(20) NOT NULL,
+  last_name char(20) NOT NULL,
+  PRIMARY KEY(OHIP)
+);
+
+
+CREATE TABLE IF NOT EXISTS treat(
+  license_number char(4) NOT NULL,
+  OHIP_num char(9) NOT NULL,
+  PRIMARY KEY(license_number,OHIP_num),
+  FOREIGN KEY (OHIP_num) REFERENCES patient(OHIP),
+  FOREIGN KEY (license_number) REFERENCES doctor(license_num) ON DELETE CASCADE
+   );
+
+ALTER TABLE doctor
+ADD FOREIGN KEY (unique_code) REFERENCES hospital(unique_code);
+
+SHOW TABLES;

@@ -1,0 +1,81 @@
+USE hwu364assign2db;
+SELECT * from patient;
+/*load table*/
+LOAD DATA LOCAL INFILE '/home/centos/assignment2/loaddatafall2019.txt'
+INTO TABLE patient
+FIELDS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+(OHIP, first_name, last_name);
+
+/*insert patient*/
+INSERT INTO patient (OHIP, first_name, last_name)
+VALUES ("250998877", "Ivy", "Wu");
+
+/*insert doctor no hospital_assigned*/
+INSERT INTO doctor(license_num,first_name,last_name,specialty,date_of_licensed)
+VALUES("RD34","Bernie", "Kavorikian", "Urologist","1980-09-09");
+INSERT INTO doctor(license_num,first_name,last_name,specialty,date_of_licensed)
+VALUES("GD56","Joey", "Shabado", "Podiatrist","1960-06-24");
+INSERT INTO doctor(license_num,first_name,last_name,specialty,date_of_licensed)
+VALUES("HT45","Ross", "Clooney", "Surgeon","1987-06-20");
+INSERT INTO doctor(license_num,first_name,last_name,specialty,date_of_licensed)
+VALUES("YT67","Ben", "Spock", "Pediatrician","1955-02-20");
+INSERT INTO doctor(license_num,first_name,last_name,specialty,date_of_licensed)
+VALUES("JK78","Mandy", "Webster", "Surgeon","1990-08-08");
+INSERT INTO doctor(license_num,first_name,last_name,specialty,date_of_licensed)
+VALUES("SE66","Colleen", "Aziz", "Surgeon","1989-08-24");
+INSERT INTO doctor(license_num,first_name,last_name,specialty,date_of_licensed)
+VALUES("JJ60","Olivia", "Zhong", "Surgeon","1996-06-08");
+
+/*insert hospital*/
+INSERT INTO hospital(unique_code,hospital_name,city,province,num_of_beds,current_head,date_of_start)
+VALUES("BBC","St. Joseph","London","ON",1000,"GD56","1999-09-10");
+INSERT INTO hospital(unique_code,hospital_name,city,province,num_of_beds,current_head,date_of_start)
+VALUES("ABC","Victoria","London","ON",1600,"YT67","1997-12-07");
+INSERT INTO hospital(unique_code,hospital_name,city,province,num_of_beds,current_head,date_of_start)
+VALUES("DDE","Victoria","Victoria","BC",1200,"SE66","1994-12-05");
+
+/*treat table*/
+
+INSERT INTO treat(license_number,OHIP_num)
+VALUES("HT45","444555666");
+INSERT INTO treat(license_number,OHIP_num)
+VALUES("GD56","110112113");
+INSERT INTO treat(license_number,OHIP_num)
+VALUES("JK78","444555666");
+INSERT INTO treat(license_number,OHIP_num)
+VALUES("SE66","111222333");
+INSERT INTO treat(license_number,OHIP_num)
+VALUES("YT67","111222333");
+INSERT INTO treat(license_number,OHIP_num)
+VALUES("JK78","111222333");
+INSERT INTO treat(license_number,OHIP_num)
+VALUES("GD56","333444555");
+INSERT INTO treat(license_number,OHIP_num)
+VALUES("YT67","667766777");
+INSERT INTO treat(license_number,OHIP_num)
+VALUES("JK78","667766777");
+INSERT INTO treat(license_number,OHIP_num)
+VALUES("GD56","667766777");
+INSERT INTO treat(license_number,OHIP_num)
+VALUES("YT67","111222111");
+INSERT INTO treat(license_number,OHIP_num)
+VALUES("YT67","250998877");
+
+SELECT * from patient;
+
+/*add hospital back-upate doctor*/
+UPDATE doctor SET unique_code="BBC" WHERE license_num ="RD34" ;
+UPDATE doctor SET unique_code="BBC" WHERE license_num ="GD56" ;
+UPDATE doctor SET unique_code="ABC" WHERE license_num ="HT45" ;
+UPDATE doctor SET unique_code="ABC" WHERE license_num ="YT67" ;
+UPDATE doctor SET unique_code="ABC" WHERE license_num ="JK78" ;
+UPDATE doctor SET unique_code="ABC" WHERE license_num ="SE66" ;
+UPDATE doctor SET unique_code="ABC" WHERE license_num ="JJ60" ;
+
+/*upate patient*/
+UPDATE patient SET OHIP="111222111" WHERE last_name ="Brown" ;
+
+SELECT * from patient;
+
+UPDATE treat SET license_number = 'HT45' WHERE license_number=(SELECT license_num FROM doctor where last_name ="Spock");

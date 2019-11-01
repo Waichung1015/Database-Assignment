@@ -1,0 +1,279 @@
+Warning: Using a password on the command line interface can be insecure.
+--------------
+SELECT * from patient
+--------------
+
+Empty set (0.00 sec)
+
+--------------
+LOAD DATA LOCAL INFILE '/home/centos/assignment2/loaddatafall2019.txt'
+INTO TABLE patient
+FIELDS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+(OHIP, first_name, last_name)
+--------------
+
+Query OK, 7 rows affected, 2 warnings (0.01 sec)
+Records: 7  Deleted: 0  Skipped: 0  Warnings: 2
+
+--------------
+INSERT INTO patient (OHIP, first_name, last_name)
+VALUES ("250998877", "Ivy", "Wu")
+--------------
+
+Query OK, 1 row affected (0.01 sec)
+
+--------------
+INSERT INTO doctor(license_num,first_name,last_name,specialty,date_of_licensed)
+VALUES("RD34","Bernie", "Kavorikian", "Urologist","1980-09-09")
+--------------
+
+Query OK, 1 row affected (0.01 sec)
+
+--------------
+INSERT INTO doctor(license_num,first_name,last_name,specialty,date_of_licensed)
+VALUES("GD56","Joey", "Shabado", "Podiatrist","1960-06-24")
+--------------
+
+Query OK, 1 row affected (0.21 sec)
+
+--------------
+INSERT INTO doctor(license_num,first_name,last_name,specialty,date_of_licensed)
+VALUES("HT45","Ross", "Clooney", "Surgeon","1987-06-20")
+--------------
+
+Query OK, 1 row affected (0.03 sec)
+
+--------------
+INSERT INTO doctor(license_num,first_name,last_name,specialty,date_of_licensed)
+VALUES("YT67","Ben", "Spock", "Pediatrician","1955-02-20")
+--------------
+
+Query OK, 1 row affected (0.00 sec)
+
+--------------
+INSERT INTO doctor(license_num,first_name,last_name,specialty,date_of_licensed)
+VALUES("JK78","Mandy", "Webster", "Surgeon","1990-08-08")
+--------------
+
+Query OK, 1 row affected (0.01 sec)
+
+--------------
+INSERT INTO doctor(license_num,first_name,last_name,specialty,date_of_licensed)
+VALUES("SE66","Colleen", "Aziz", "Surgeon","1989-08-24")
+--------------
+
+Query OK, 1 row affected (0.00 sec)
+
+--------------
+INSERT INTO doctor(license_num,first_name,last_name,specialty,date_of_licensed)
+VALUES("JJ60","Olivia", "Zhong", "Surgeon","1996-06-08")
+--------------
+
+Query OK, 1 row affected (0.01 sec)
+
+--------------
+INSERT INTO hospital(unique_code,hospital_name,city,province,num_of_beds,current_head,date_of_start)
+VALUES("BBC","St. Joseph","London","ON",1000,"GD56","1999-09-10")
+--------------
+
+Query OK, 1 row affected (0.01 sec)
+
+--------------
+INSERT INTO hospital(unique_code,hospital_name,city,province,num_of_beds,current_head,date_of_start)
+VALUES("ABC","Victoria","London","ON",1600,"YT67","1997-12-07")
+--------------
+
+Query OK, 1 row affected (0.01 sec)
+
+--------------
+INSERT INTO hospital(unique_code,hospital_name,city,province,num_of_beds,current_head,date_of_start)
+VALUES("DDE","Victoria","Victoria","BC",1200,"SE66","1994-12-05")
+--------------
+
+Query OK, 1 row affected (0.00 sec)
+
+--------------
+INSERT INTO treat(license_number,OHIP_num)
+VALUES("HT45","444555666")
+--------------
+
+Query OK, 1 row affected (0.01 sec)
+
+--------------
+INSERT INTO treat(license_number,OHIP_num)
+VALUES("GD56","110112113")
+--------------
+
+Query OK, 1 row affected (0.00 sec)
+
+--------------
+INSERT INTO treat(license_number,OHIP_num)
+VALUES("JK78","444555666")
+--------------
+
+Query OK, 1 row affected (0.02 sec)
+
+--------------
+INSERT INTO treat(license_number,OHIP_num)
+VALUES("SE66","111222333")
+--------------
+
+Query OK, 1 row affected (0.01 sec)
+
+--------------
+INSERT INTO treat(license_number,OHIP_num)
+VALUES("YT67","111222333")
+--------------
+
+Query OK, 1 row affected (0.00 sec)
+
+--------------
+INSERT INTO treat(license_number,OHIP_num)
+VALUES("JK78","111222333")
+--------------
+
+Query OK, 1 row affected (0.02 sec)
+
+--------------
+INSERT INTO treat(license_number,OHIP_num)
+VALUES("GD56","333444555")
+--------------
+
+Query OK, 1 row affected (0.00 sec)
+
+--------------
+INSERT INTO treat(license_number,OHIP_num)
+VALUES("YT67","667766777")
+--------------
+
+Query OK, 1 row affected (0.01 sec)
+
+--------------
+INSERT INTO treat(license_number,OHIP_num)
+VALUES("JK78","667766777")
+--------------
+
+Query OK, 1 row affected (0.01 sec)
+
+--------------
+INSERT INTO treat(license_number,OHIP_num)
+VALUES("GD56","667766777")
+--------------
+
+Query OK, 1 row affected (0.00 sec)
+
+--------------
+INSERT INTO treat(license_number,OHIP_num)
+VALUES("YT67","111222111")
+--------------
+
+Query OK, 1 row affected (0.18 sec)
+
+--------------
+INSERT INTO treat(license_number,OHIP_num)
+VALUES("YT67","250998877")
+--------------
+
+Query OK, 1 row affected (0.01 sec)
+
+--------------
+SELECT * from patient
+--------------
+
++-----------+------------+-----------+
+| OHIP      | first_name | last_name |
++-----------+------------+-----------+
+|           |            |           |
+| 110112113 | Bill       | Gellar    |
+| 111222111 | Suzi       | Bing      |
+| 111222333 | Jon        | Green     |
+| 250998877 | Ivy        | Wu        |
+| 333444555 | Colleen    | Gellar    |
+| 444555666 | Sean       | Gellar    |
+| 667766777 | Scotty     | Bing      |
++-----------+------------+-----------+
+8 rows in set (0.00 sec)
+
+--------------
+UPDATE doctor SET unique_code="BBC" WHERE license_num ="RD34"
+--------------
+
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+--------------
+UPDATE doctor SET unique_code="BBC" WHERE license_num ="GD56"
+--------------
+
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+--------------
+UPDATE doctor SET unique_code="ABC" WHERE license_num ="HT45"
+--------------
+
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+--------------
+UPDATE doctor SET unique_code="ABC" WHERE license_num ="YT67"
+--------------
+
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+--------------
+UPDATE doctor SET unique_code="ABC" WHERE license_num ="JK78"
+--------------
+
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+--------------
+UPDATE doctor SET unique_code="ABC" WHERE license_num ="SE66"
+--------------
+
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+--------------
+UPDATE doctor SET unique_code="ABC" WHERE license_num ="JJ60"
+--------------
+
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+--------------
+UPDATE patient SET OHIP="111222111" WHERE last_name ="Brown"
+--------------
+
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+--------------
+SELECT * from patient
+--------------
+
++-----------+------------+-----------+
+| OHIP      | first_name | last_name |
++-----------+------------+-----------+
+|           |            |           |
+| 110112113 | Bill       | Gellar    |
+| 111222111 | Suzi       | Bing      |
+| 111222333 | Jon        | Green     |
+| 250998877 | Ivy        | Wu        |
+| 333444555 | Colleen    | Gellar    |
+| 444555666 | Sean       | Gellar    |
+| 667766777 | Scotty     | Bing      |
++-----------+------------+-----------+
+8 rows in set (0.00 sec)
+
+--------------
+UPDATE treat SET license_number = 'HT45' WHERE license_number=(SELECT license_num FROM doctor where last_name ="Spock")
+--------------
+
+Query OK, 4 rows affected (0.01 sec)
+Rows matched: 4  Changed: 4  Warnings: 0
+
+Bye

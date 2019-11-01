@@ -1,0 +1,103 @@
+Warning: Using a password on the command line interface can be insecure.
+ERROR 1451 (23000) at line 3: Cannot delete or update a parent row: a foreign key constraint fails (`hwu364assign2db`.`doctor`, CONSTRAINT `doctor_ibfk_1` FOREIGN KEY (`unique_code`) REFERENCES `hospital` (`unique_code`))
+--------------
+DELETE FROM doctor WHERE date_of_licensed < "1965-01-01"
+--------------
+
+--------------
+SELECT * FROM doctor
+--------------
+
++-------------+------------+------------+--------------+------------------+-------------+
+| license_num | first_name | last_name  | specialty    | date_of_licensed | unique_code |
++-------------+------------+------------+--------------+------------------+-------------+
+| GD56        | Joey       | Shabado    | Podiatrist   | 1960-06-24       | BBC         |
+| RD34        | Bernie     | Kavorikian | Urologist    | 1980-09-09       | BBC         |
+| YT67        | Ben        | Spock      | Pediatrician | 1955-02-20       | ABC         |
++-------------+------------+------------+--------------+------------------+-------------+
+3 rows in set (0.00 sec)
+
+ERROR 1050 (42S01) at line 8: Table 'treat_head' already exists
+--------------
+CREATE VIEW treat_head AS SELECT patient.first_name,patient.last_name,doctor.last_name AS "Doctor Name",hospital.hospital_name
+FROM patient,hospital,treat,doctor WHERE treat.OHIP_num = patient.OHIP AND treat.license_number = hospital.current_head  AND doctor.license_num = hospital.current_head AND hospital.date_of_start > "1995-12-31"
+--------------
+
+--------------
+SELECT * FROM treat_head
+--------------
+
++------------+-----------+-------------+---------------+
+| first_name | last_name | Doctor Name | hospital_name |
++------------+-----------+-------------+---------------+
+| Bill       | Gellar    | Shabado     | St. Joseph    |
+| Colleen    | Gellar    | Shabado     | St. Joseph    |
+| Scotty     | Bing      | Shabado     | St. Joseph    |
++------------+-----------+-------------+---------------+
+3 rows in set (0.01 sec)
+
+--------------
+SELECT * FROM doctor
+--------------
+
++-------------+------------+------------+--------------+------------------+-------------+
+| license_num | first_name | last_name  | specialty    | date_of_licensed | unique_code |
++-------------+------------+------------+--------------+------------------+-------------+
+| GD56        | Joey       | Shabado    | Podiatrist   | 1960-06-24       | BBC         |
+| RD34        | Bernie     | Kavorikian | Urologist    | 1980-09-09       | BBC         |
+| YT67        | Ben        | Spock      | Pediatrician | 1955-02-20       | ABC         |
++-------------+------------+------------+--------------+------------------+-------------+
+3 rows in set (0.00 sec)
+
+--------------
+SELECT * FROM treat
+--------------
+
++----------------+-----------+
+| license_number | OHIP_num  |
++----------------+-----------+
+| GD56           | 110112113 |
+| GD56           | 333444555 |
+| GD56           | 667766777 |
++----------------+-----------+
+3 rows in set (0.00 sec)
+
+--------------
+DELETE FROM doctor WHERE last_name='Clooney'
+--------------
+
+Query OK, 0 rows affected (0.00 sec)
+
+--------------
+SELECT * FROM doctor
+--------------
+
++-------------+------------+------------+--------------+------------------+-------------+
+| license_num | first_name | last_name  | specialty    | date_of_licensed | unique_code |
++-------------+------------+------------+--------------+------------------+-------------+
+| GD56        | Joey       | Shabado    | Podiatrist   | 1960-06-24       | BBC         |
+| RD34        | Bernie     | Kavorikian | Urologist    | 1980-09-09       | BBC         |
+| YT67        | Ben        | Spock      | Pediatrician | 1955-02-20       | ABC         |
++-------------+------------+------------+--------------+------------------+-------------+
+3 rows in set (0.00 sec)
+
+--------------
+DELETE FROM doctor WHERE specialty='Surgeon'
+--------------
+
+Query OK, 0 rows affected (0.00 sec)
+
+--------------
+SELECT * FROM doctor
+--------------
+
++-------------+------------+------------+--------------+------------------+-------------+
+| license_num | first_name | last_name  | specialty    | date_of_licensed | unique_code |
++-------------+------------+------------+--------------+------------------+-------------+
+| GD56        | Joey       | Shabado    | Podiatrist   | 1960-06-24       | BBC         |
+| RD34        | Bernie     | Kavorikian | Urologist    | 1980-09-09       | BBC         |
+| YT67        | Ben        | Spock      | Pediatrician | 1955-02-20       | ABC         |
++-------------+------------+------------+--------------+------------------+-------------+
+3 rows in set (0.00 sec)
+
+Bye

@@ -1,0 +1,182 @@
+Warning: Using a password on the command line interface can be insecure.
+--------------
+SELECT last_name FROM patient
+--------------
+
++-----------+
+| last_name |
++-----------+
+|           |
+| Gellar    |
+| Bing      |
+| Green     |
+| Wu        |
+| Gellar    |
+| Gellar    |
+| Bing      |
++-----------+
+8 rows in set (0.00 sec)
+
+--------------
+SELECT DISTINCT last_name FROM patient
+--------------
+
++-----------+
+| last_name |
++-----------+
+|           |
+| Gellar    |
+| Bing      |
+| Green     |
+| Wu        |
++-----------+
+5 rows in set (0.00 sec)
+
+--------------
+SELECT * FROM doctor ORDER BY last_name
+--------------
+
++-------------+------------+------------+--------------+------------------+-------------+
+| license_num | first_name | last_name  | specialty    | date_of_licensed | unique_code |
++-------------+------------+------------+--------------+------------------+-------------+
+| SE66        | Colleen    | Aziz       | Surgeon      | 1989-08-24       | ABC         |
+| HT45        | Ross       | Clooney    | Surgeon      | 1987-06-20       | ABC         |
+| RD34        | Bernie     | Kavorikian | Urologist    | 1980-09-09       | BBC         |
+| GD56        | Joey       | Shabado    | Podiatrist   | 1960-06-24       | BBC         |
+| YT67        | Ben        | Spock      | Pediatrician | 1955-02-20       | ABC         |
+| JK78        | Mandy      | Webster    | Surgeon      | 1990-08-08       | ABC         |
+| JJ60        | Olivia     | Zhong      | Surgeon      | 1996-06-08       | ABC         |
++-------------+------------+------------+--------------+------------------+-------------+
+7 rows in set (0.00 sec)
+
+--------------
+SELECT hospital_name,unique_code FROM hospital WHERE num_of_beds>=1500
+--------------
+
++---------------+-------------+
+| hospital_name | unique_code |
++---------------+-------------+
+| Victoria      | ABC         |
++---------------+-------------+
+1 row in set (0.00 sec)
+
+--------------
+SELECT first_name,last_name FROM doctor WHERE unique_code =(SELECT unique_code FROM hospital WHERE hospital_name ='St. Joseph')
+--------------
+
++------------+------------+
+| first_name | last_name  |
++------------+------------+
+| Joey       | Shabado    |
+| Bernie     | Kavorikian |
++------------+------------+
+2 rows in set (0.00 sec)
+
+--------------
+SELECT first_name,last_name FROM patient WHERE last_name like "G%"
+--------------
+
++------------+-----------+
+| first_name | last_name |
++------------+-----------+
+| Bill       | Gellar    |
+| Jon        | Green     |
+| Colleen    | Gellar    |
+| Sean       | Gellar    |
++------------+-----------+
+4 rows in set (0.00 sec)
+
+--------------
+SELECT patient.first_name,patient.last_name FROM patient,treat,doctor WHERE patient.OHIP = treat.OHIP_num AND treat.license_number = doctor.license_num AND doctor.last_name = "Clooney"
+--------------
+
++------------+-----------+
+| first_name | last_name |
++------------+-----------+
+| Suzi       | Bing      |
+| Jon        | Green     |
+| Ivy        | Wu        |
+| Sean       | Gellar    |
+| Scotty     | Bing      |
++------------+-----------+
+5 rows in set (0.00 sec)
+
+--------------
+SELECT hospital_name,city,last_name FROM doctor,hospital WHERE doctor.license_num = hospital.current_head
+--------------
+
++---------------+----------+-----------+
+| hospital_name | city     | last_name |
++---------------+----------+-----------+
+| Victoria      | London   | Spock     |
+| St. Joseph    | London   | Shabado   |
+| Victoria      | Victoria | Aziz      |
++---------------+----------+-----------+
+3 rows in set (0.00 sec)
+
+--------------
+SELECT SUM(num_of_beds) AS "Total number of beds" from hospital
+--------------
+
++----------------------+
+| Total number of beds |
++----------------------+
+|                 3800 |
++----------------------+
+1 row in set (0.00 sec)
+
+--------------
+SELECT patient.first_name,doctor.first_name FROM patient,doctor,treat,hospital WHERE doctor.license_num = hospital.current_head AND hospital.current_head = treat.license_number AND patient.OHIP = treat.OHIP_num
+--------------
+
++------------+------------+
+| first_name | first_name |
++------------+------------+
+| Bill       | Joey       |
+| Colleen    | Joey       |
+| Scotty     | Joey       |
+| Jon        | Colleen    |
++------------+------------+
+4 rows in set (0.01 sec)
+
+--------------
+SELECT last_name,first_name FROM doctor,hospital WHERE specialty = 'Surgeon' AND doctor.unique_code = hospital.unique_code AND hospital_name = 'Victoria'
+--------------
+
++-----------+------------+
+| last_name | first_name |
++-----------+------------+
+| Clooney   | Ross       |
+| Zhong     | Olivia     |
+| Webster   | Mandy      |
+| Aziz      | Colleen    |
++-----------+------------+
+4 rows in set (0.00 sec)
+
+--------------
+SELECT first_name FROM doctor WHERE license_num Not IN (SELECT license_number FROM treat)
+--------------
+
++------------+
+| first_name |
++------------+
+| Olivia     |
+| Bernie     |
+| Ben        |
++------------+
+3 rows in set (0.00 sec)
+
+--------------
+SELECT first_name,last_name FROM doctor WHERE license_num IN (SELECT license_number FROM treat GROUP BY license_number HAVING COUNT(OHIP_num)>1)
+--------------
+
++------------+-----------+
+| first_name | last_name |
++------------+-----------+
+| Joey       | Shabado   |
+| Ross       | Clooney   |
+| Mandy      | Webster   |
++------------+-----------+
+3 rows in set (0.00 sec)
+
+Bye

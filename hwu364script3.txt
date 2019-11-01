@@ -1,0 +1,27 @@
+/*Query 1*/
+USE hwu364assign2db;
+SELECT last_name FROM patient;
+/*Query 2*/
+SELECT DISTINCT last_name FROM patient;
+/*Query 3*/
+SELECT * FROM doctor ORDER BY last_name;
+/*Query 4*/
+SELECT hospital_name,unique_code FROM hospital WHERE num_of_beds>=1500;
+/*Query 5*/
+SELECT first_name,last_name FROM doctor WHERE unique_code =(SELECT unique_code FROM hospital WHERE hospital_name ='St. Joseph');
+/*Query 6*/
+SELECT first_name,last_name FROM patient WHERE last_name like "G%";
+/*Query 7*/
+SELECT patient.first_name,patient.last_name FROM patient,treat,doctor WHERE patient.OHIP = treat.OHIP_num AND treat.license_number = doctor.license_num AND doctor.last_name = "Clooney";
+/*Query 8*/
+SELECT hospital_name,city,last_name FROM doctor,hospital WHERE doctor.license_num = hospital.current_head;
+/*Query 9*/
+SELECT SUM(num_of_beds) AS "Total number of beds" from hospital;
+/*Query 10*/
+SELECT patient.first_name,doctor.first_name FROM patient,doctor,treat,hospital WHERE doctor.license_num = hospital.current_head AND hospital.current_head = treat.license_number AND patient.OHIP = treat.OHIP_num;
+/*Query 11*/
+SELECT last_name,first_name FROM doctor,hospital WHERE specialty = 'Surgeon' AND doctor.unique_code = hospital.unique_code AND hospital_name = 'Victoria';
+/*Query 12*/
+SELECT first_name FROM doctor WHERE license_num Not IN (SELECT license_number FROM treat);
+/*Query 13*/
+SELECT first_name,last_name FROM doctor WHERE license_num IN (SELECT license_number FROM treat GROUP BY license_number HAVING COUNT(OHIP_num)>1);

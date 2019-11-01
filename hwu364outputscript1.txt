@@ -1,0 +1,141 @@
+Warning: Using a password on the command line interface can be insecure.
+--------------
+SHOW DATABASES
+--------------
+
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| ivyisbest          |
+| mysql              |
+| performance_schema |
+| vetoffice          |
++--------------------+
+5 rows in set (0.00 sec)
+
+--------------
+DROP DATABASE IF EXISTS hwu364assign2db
+--------------
+
+Query OK, 0 rows affected, 1 warning (0.00 sec)
+
+--------------
+CREATE DATABASE hwu364assign2db
+--------------
+
+Query OK, 1 row affected (0.00 sec)
+
+--------------
+GRANT USAGE ON *.* TO 'ta'@'localhost'
+--------------
+
+Query OK, 0 rows affected (0.00 sec)
+
+--------------
+DROP USER 'ta'@'localhost'
+--------------
+
+Query OK, 0 rows affected (0.00 sec)
+
+--------------
+CREATE USER 'ta'@'localhost' IDENTIFIED BY 'cs3319'
+--------------
+
+Query OK, 0 rows affected (0.00 sec)
+
+--------------
+GRANT ALL PRIVILEGES ON hwu364assign2db.* TO 'ta'@'localhost'
+--------------
+
+Query OK, 0 rows affected (0.00 sec)
+
+--------------
+FLUSH PRIVILEGES
+--------------
+
+Query OK, 0 rows affected (0.00 sec)
+
+--------------
+SHOW TABLES
+--------------
+
+Empty set (0.00 sec)
+
+--------------
+CREATE TABLE IF NOT EXISTS doctor(
+  license_num char(4) NOT NULL,
+  first_name char(20) NOT NULL,
+  last_name char(20) NOT NULL,
+  specialty char(30),
+  date_of_licensed date,
+  unique_code char(3),
+  PRIMARY KEY(license_num)
+)
+--------------
+
+Query OK, 0 rows affected (0.06 sec)
+
+--------------
+CREATE TABLE IF NOT EXISTS hospital(
+  unique_code char(3) NOT NULL,
+  hospital_name char(20) NOT NULL,
+  city char(20) NOT NULL,
+  province char(2) NOT NULL,
+  num_of_beds int,
+  current_head char(4),
+  date_of_start DATE,
+  PRIMARY KEY(unique_code),
+  FOREIGN KEY (current_head) REFERENCES doctor(license_num)
+  ON DELETE CASCADE
+)
+--------------
+
+Query OK, 0 rows affected (0.06 sec)
+
+--------------
+CREATE TABLE IF NOT EXISTS patient(
+  OHIP char(9) NOT NULL,
+  first_name char(20) NOT NULL,
+  last_name char(20) NOT NULL,
+  PRIMARY KEY(OHIP)
+)
+--------------
+
+Query OK, 0 rows affected (0.05 sec)
+
+--------------
+CREATE TABLE IF NOT EXISTS treat(
+  license_number char(4) NOT NULL,
+  OHIP_num char(9) NOT NULL,
+  PRIMARY KEY(license_number,OHIP_num),
+  FOREIGN KEY (OHIP_num) REFERENCES patient(OHIP),
+  FOREIGN KEY (license_number) REFERENCES doctor(license_num) ON DELETE CASCADE
+   )
+--------------
+
+Query OK, 0 rows affected (0.06 sec)
+
+--------------
+ALTER TABLE doctor
+ADD FOREIGN KEY (unique_code) REFERENCES hospital(unique_code)
+--------------
+
+Query OK, 0 rows affected (0.33 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+--------------
+SHOW TABLES
+--------------
+
++---------------------------+
+| Tables_in_hwu364assign2db |
++---------------------------+
+| doctor                    |
+| hospital                  |
+| patient                   |
+| treat                     |
++---------------------------+
+4 rows in set (0.01 sec)
+
+Bye

@@ -1,0 +1,25 @@
+/*--q1*/
+USE hwu364assign2db;
+DELETE FROM doctor WHERE date_of_licensed < "1965-01-01";
+SELECT * FROM doctor;
+/*--The error occurs because doctor.unique_code is the foreign key of hospital.current_head. If the doctors who have date_of_licensed before "1965-01-01" are deleted, the current heads which are shown on the hospital table were deleted as well. The relationship of showing one hospital has one head as the question is required isn't satisfied. */
+
+/*--q2*/
+CREATE VIEW treat_head AS SELECT patient.first_name,patient.last_name,doctor.last_name AS "Doctor Name",hospital.hospital_name
+FROM patient,hospital,treat,doctor WHERE treat.OHIP_num = patient.OHIP AND treat.license_number = hospital.current_head  AND doctor.license_num = hospital.current_head AND hospital.date_of_start > "1995-12-31";
+SELECT * FROM treat_head;
+
+/*--q3*/
+SELECT * FROM doctor;
+/*q4*/
+SELECT * FROM treat;
+
+/*--q5*/
+DELETE FROM doctor WHERE last_name='Clooney';
+SELECT * FROM doctor;
+/*--No error exist because on caseade delete is set.When "Clooney" is deleted, then the row with it may also deleted in treat table.--*/
+
+/*--q6*/
+DELETE FROM doctor WHERE specialty='Surgeon';
+SELECT * FROM doctor;
+/*--The rows of doctors who are specialized in Surgeon are deleted because on caseade delete are set for treat table which are related to doctor table. None of current head of hospital are specialized in "surgeon", therefore no error to delete the rows. */
